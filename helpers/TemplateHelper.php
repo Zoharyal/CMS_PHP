@@ -18,4 +18,19 @@ class TemplateHelper
         return $result;
     }
 
+
+    public static function displayTemplate(String $templateName, $content) {
+        $header = file_get_contents(self::TEMPLATE_DIRECTORY . '/layouts/header.html');
+        $emptyTemplate = file_get_contents(self::TEMPLATE_DIRECTORY  . '/' . $templateName . '.html');
+        $footer = file_get_contents(self::TEMPLATE_DIRECTORY . '/layouts/footer.html');
+        $result = $header . $footer;
+        $test = '';
+        foreach($content as $key => $value) {
+            //   $test .= "<a href=''>" . $value->title . '</a>';
+            $tag = array('%%TITLE%%', '%%CONTENT%%');
+            $info = array($value->title, $value->content);
+            $result .= str_replace($tag, $info, $emptyTemplate);
+        } 
+        return $result;
+    }
 }

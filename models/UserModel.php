@@ -7,6 +7,7 @@ class UserModel extends Model
 {
     function __construct()
     {
+        $ini = parse_ini_file('/var/www/html/config/dev.ini');
         $this->tableName = 'users';
         // Execute the direct parent constructor
         parent::__construct();
@@ -17,7 +18,7 @@ class UserModel extends Model
         $request->execute( array(':username' => $username));
         $results = $request->fetchAll(PDO::FETCH_OBJ);
         if($results[0]->is_connected !== '1') {
-            header('Location: /auth/logoutAction');
+            header('Location: ' . $ini["logout_url"]);
         }
 
     }
@@ -36,6 +37,6 @@ class UserModel extends Model
                 }
             }
         }
-        header('Location: /auth/login');
+        header('Location: ' . $ini["login_url"]);
     }
 }

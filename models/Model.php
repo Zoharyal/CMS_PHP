@@ -3,9 +3,6 @@
 
 class Model 
 {
-    const DB_NAME = 'my_cms';
-    const USER = 'root';
-    const PASS = '1234';
     protected $dbConnect;
     protected $tableName;
     
@@ -24,7 +21,7 @@ class Model
     public function getAll() {
         $request = $this->dbConnect->prepare('SELECT * FROM ' . $this->tableName);
         $request->execute();
-        $results = $request->fetchAll();
+        $results = $request->fetchAll(PDO::FETCH_OBJ);
         return $results;
     }
 
